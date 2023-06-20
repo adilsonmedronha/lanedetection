@@ -1200,7 +1200,7 @@ class LaneDataset(Dataset):
         """
 
         label_list = glob.glob(json_file_path + '**/*.json', recursive=True)
-
+        print( ">>>>>>>>>>>>>>>>>>>", json_file_path )
         # save label list and this determine the idx order
         self._label_list = label_list
         
@@ -1368,7 +1368,8 @@ class LaneDataset(Dataset):
         for i, path in enumerate(label_image_path):
             idx_path[i] = path
 
-        if "lane3d_1000" in json_file_path:
+        # if "lane3d_1000" in json_file_path:
+        if True:
             train_idx_file = os.path.join(self.save_json_path, 'train_idx_1000.json')
             val_idx_file = os.path.join(self.save_json_path, 'val_idx_1000.json')
         elif "lane3d_300" in json_file_path:

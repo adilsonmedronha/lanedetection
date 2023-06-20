@@ -28,12 +28,15 @@ def main():
     # specify dataset and model config
     # persformer_apollo.config(args)
     # persformer_once.config(args)
+    args.evaluate = True
+
     persformer_openlane.config(args)
     # initialize distributed data parallel set
     ddp_init(args)
     # define runner to begin training or evaluation
+
     runner = Runner(args)
-    # args.evaluate = True
+
     if not args.evaluate:
         runner.train()
     else:

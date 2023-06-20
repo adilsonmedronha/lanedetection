@@ -24,11 +24,14 @@ def config(args):
     # args.dataset_name = 'openlane'
     # args.dataset_dir = '/mnt/disk01/openlane/images/'
     # args.data_dir = '/mnt/disk01/openlane/lane3d_300/'
+    args.evaluate = True
+    args.evaluate_case = False
+
 
     # 1000 sequence
     args.dataset_name = 'openlane'
-    args.dataset_dir = '/mnt/disk01/openlane/images/'
-    args.data_dir = '/mnt/disk01/openlane/lane3d_1000/'
+    args.dataset_dir = '/home/adilson/git/p/CEMIG/data/openLaneDataset/lane3d_300/images'
+    args.data_dir =    '/home/adilson/git/p/CEMIG/data/openLaneDataset/lane3d_300/'
 
     if 'openlane' in args.dataset_name:
         openlane_config(args)
@@ -37,9 +40,10 @@ def config(args):
 
     args.save_prefix = ops.join(os.getcwd(), 'data_splits')
     args.save_path = ops.join(args.save_prefix, args.dataset_name)
+    print(args.save_path)
 
     # for the case only running evaluation
-    args.evaluate = False
+    args.evaluate = True
     args.evaluate_case = False
 
     # settings for save and visualize

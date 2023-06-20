@@ -643,6 +643,7 @@ class Runner:
                 model1 = model1.to(device)
                 model2 = model2.to(device)
         
+        print(">>>>>", args.save_path)
         best_file_name = glob.glob(os.path.join(args.save_path, 'model_best*'))[0]
         if os.path.isfile(best_file_name):
             checkpoint = torch.load(best_file_name)
@@ -682,6 +683,8 @@ class Runner:
     def _get_train_dataset(self):
         args = self.args
         if 'openlane' in args.dataset_name:
+            print(args.dataset_dir)
+            print(args.data_dir + 'training/')
             train_dataset = LaneDataset(args.dataset_dir, args.data_dir + 'training/', args, data_aug=True, save_std=True, seg_bev=args.seg_bev)
 
         elif 'once' in args.dataset_name:
@@ -697,7 +700,10 @@ class Runner:
     def _get_valid_dataset(self):
         args = self.args
         if 'openlane' in args.dataset_name:
+            print(">>>>>>>>>>>>", args.evaluate_case)
             if not args.evaluate_case:
+                print(args.dataset_dir)
+                print(args.data_dir + 'validation/')
                 valid_dataset = LaneDataset(args.dataset_dir, args.data_dir + 'validation/', args, seg_bev=args.seg_bev)
             else:
                 # note: for case eval, change the 'up_down_case' to one of case names.['up_down_case','curve_case','extreme_weather_case','intersection_case','merge_split_case','night_case']  
@@ -709,11 +715,11 @@ class Runner:
             valid_dataset = LaneDataset(args.dataset_dir, self.val_gt_file, args, seg_bev=args.seg_bev)
 
         # assign std of valid dataset to be consistent with train dataset
-        valid_dataset.set_x_off_std(self.train_dataset._x_off_std)
-        if not args.no_3d:
-            valid_dataset.set_z_std(self.train_dataset._z_std)
-        if 'apollo' in args.dataset_name:
-            valid_dataset.normalize_lane_label()
+        # valid_dataset.set_x_off_std(self.train_dataset._x_off_std)
+        # if not args.no_3d:
+        #     valid_dataset.set_z_std(self.train_dataset._z_std)
+        # if 'apollo' in args.dataset_name:
+        #     valid_dataset.normalize_lane_label()
         valid_loader, valid_sampler = get_loader(valid_dataset, args)
 
         return valid_dataset, valid_loader, valid_sampler
